@@ -1,0 +1,215 @@
+@import url("https://fonts.googleapis.com/css2?family=Bellota:wght@700&family=Inter&family=Roboto+Condensed:wght@400;700&family=Roboto+Serif:opsz@8..144&family=Roboto:wght@500&display=swap");
+.index-main-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  font-size: 14px;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1440px;
+  width: 90vw;
+  height: 86px;
+  box-shadow: 0 3px 5px 0 rgba(185, 185, 185, 0.3411764706);
+}
+
+.header-container__menu {
+  display: none;
+}
+
+.header-menu__item {
+  text-decoration: none;
+  color: black;
+}
+.header-menu__item:hover {
+  cursor: pointer;
+}
+
+.header-menu__item::after {
+  content: "";
+  border-bottom: 2px solid #7acca6;
+  display: block;
+  width: 0px;
+}
+
+.header-menu__item:hover::after {
+  width: 100%;
+  height: 2px;
+  right: 0;
+  transition: 0.5s;
+}
+
+.header-container__contacts {
+  display: none;
+}
+
+@media (min-width: 1110px) {
+  .header-container__menu {
+    display: flex;
+    width: auto;
+    height: 20px;
+    gap: 60px;
+    font-family: "Roboto Condensed";
+  }
+  .header-container__contacts {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+}
+.header-contacts_phone {
+  font-family: "Inter";
+}
+.header-contacts_phone:hover {
+  color: #3c2a99;
+  transition: 0.5s;
+}
+
+.header-contacts_btn {
+  width: 180px;
+  height: 42px;
+  background-color: #99a3ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-style: "Roboto";
+}
+.header-contacts_btn:hover {
+  background-color: #3c2a99;
+  transition: 0.5s;
+}
+
+.header-container-left {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.index-title-container {
+  display: grid;
+  grid-template-areas: "title img" "sub img";
+  grid-template-rows: auto auto;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 90vw;
+  max-width: 1440px;
+  height: 421px;
+  margin-top: 60px;
+}
+
+.index-title__text {
+  width: auto;
+}
+
+.index-title__title {
+  grid-area: title;
+  font-family: "Bellota";
+  font-size: 62px;
+  margin: 0px;
+}
+
+@media (max-width: 1100px) {
+  .index-title__title {
+    font-size: calc(24px + 2.7777777778vw);
+  }
+}
+.index-title__highlight {
+  color: #3c2a99;
+}
+
+.index-title__sub {
+  display: flex;
+  grid-area: sub;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 331px;
+  font-family: "Roboto Condensed";
+  font-size: 14px;
+  margin-top: 58px;
+  margin-bottom: 20px;
+}
+
+.index-title-container__img {
+  display: flex;
+  grid-area: img;
+  width: 401px;
+  padding: 10px;
+  align-items: flex-start;
+}
+
+@media (max-width: 940px) {
+  .index-title-container {
+    display: grid;
+    grid-template-areas: "title title" "sub img";
+    grid-template-rows: auto auto;
+    grid-template-columns: 175px auto;
+    height: auto;
+  }
+  .index-title-container__img {
+    grid-area: img;
+    justify-self: end;
+    width: 100%;
+    max-width: 140px;
+    max-height: 130px;
+    margin-top: 30px;
+    padding: 0;
+  }
+  .index-title__title {
+    grid-area: title;
+  }
+  .index-title__sub {
+    grid-area: sub;
+    width: 200px;
+    height: auto;
+    margin-top: 30px;
+  }
+}
+.index-service-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100vw;
+  height: auto;
+  background-color: #3c2a99;
+  color: white;
+  overflow: hidden;
+}
+
+.index-service-container__img {
+  width: 888px;
+  transform: translateX(-10%);
+  position: static;
+}
+
+.index-service-text__title {
+  font-family: "Bellota";
+  font-size: 36px;
+  margin-bottom: 40px;
+}
+
+.index-service-text__text {
+  display: flex;
+  flex-direction: column;
+  font-family: "Roboto Serif";
+  font-weight: 400;
+  font-size: 20px;
+  width: 525px;
+  margin-bottom: 40px;
+}
+
+.index-service__btn {
+  background-color: #3c2a99;
+  border-radius: 5px;
+  border: 1px solid white;
+  color: white;
+  width: 176px;
+  height: 42px;
+  margin-bottom: 40px;
+}
