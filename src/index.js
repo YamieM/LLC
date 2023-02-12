@@ -20,6 +20,13 @@ import itemsImg17 from "./img/prod17.png";
 import qualityImg from "./img/quality.png";
 import profitImg from "./img/profit.png";
 import confidenceImg from "./img/confidence.png";
+import imageForm from "./img/imageForm.svg";
+import logoHeader from "./img/logoHeader.svg";
+import mobMenuBtnImg from "./img/mobMenuBtn.svg";
+import mobMenuBtnClose from "./img/closeBtn.svg";
+import titleImg from "./img/titleImg.svg";
+import serviceImg from "./img/serviceImg.svg";
+import footerLogoImg from "./img/footerLogo.svg";
 
 const mainContainer = document.querySelector(".index-main-container");
 const addElement = ({
@@ -56,7 +63,12 @@ const addElement = ({
 const createHeader = () => {
   const headerMenu = document.querySelector(".header-container__menu");
   const headerContacts = document.querySelector(".header-container__contacts");
-
+  const headerLogo = document.querySelector(".header-container__logo");
+  addElement({
+    createdElement: "img",
+    img: logoHeader,
+    parentElement: headerLogo,
+  });
   addElement({
     createdElement: "a",
     content: "ГЛАВНАЯ",
@@ -97,7 +109,7 @@ const createHeader = () => {
   addElement({
     createdElement: "a",
     content: "+7 (495) 369-39-61",
-    link: "",
+    link: "tel: +7 (495) 369-39-61",
     parentElement: headerContacts,
     addClass: "header-contacts__phone",
   });
@@ -111,87 +123,103 @@ const createHeader = () => {
 };
 createHeader();
 
+//  MOB MENU  //
+
 const createMobMenu = () => {
   const mobMenuBtn = document.querySelector(".header-container__mob-menu");
   const mobMenuCloseBtn = document.querySelector(".mob-menu_close");
+  const mobMenuContainer = document.createElement("div");
+  const mobMenu = document.createElement("div");
+  const mobMenuContacts = document.createElement("div");
+  const footer = document.querySelector("footer");
+  mobMenuContainer.classList.add("index__mobile-menu");
+  addElement({
+    createdElement: "img",
+    img: mobMenuBtnImg,
+    parentElement: mobMenuBtn,
+  });
+
+  addElement({
+    createdElement: "img",
+    img: mobMenuBtnClose,
+    parentElement: mobMenuCloseBtn,
+  });
+
+  addElement({
+    createdElement: "a",
+    content: "ГЛАВНАЯ",
+    link: "/",
+    addClass: `mobile-menu__item`,
+    parentElement: mobMenu,
+    grandParentElement: mobMenuContainer,
+  });
+
+  addElement({
+    createdElement: "a",
+    content: "КАТАЛОГ",
+    addClass: `mobile-menu__item`,
+    parentElement: mobMenu,
+  });
+
+  addElement({
+    createdElement: "a",
+    content: "СТАТЬИ",
+    addClass: `mobile-menu__item`,
+    parentElement: mobMenu,
+  });
+
+  addElement({
+    createdElement: "a",
+    content: "КОНТАКТЫ",
+    link: "/contacts/",
+    addClass: `mobile-menu__item`,
+    parentElement: mobMenu,
+  });
+
+  addElement({
+    createdElement: "a",
+    content: "О НАС",
+    addClass: `mobile-menu__item`,
+    parentElement: mobMenu,
+  });
+
+  addElement({
+    createdElement: "a",
+    content: "+7 (495) 369-39-61",
+    link: "tel: +7 (495) 369-39-61",
+    addClass: "mobile-contacts__phone",
+    parentElement: mobMenuContacts,
+    grandParentElement: mobMenuContainer,
+  });
+
+  addElement({
+    createdElement: "button",
+    content: "ЗАКАЗАТЬ ЗВОНОК!",
+    addClass: "mobile-contacts__btn",
+    parentElement: mobMenuContacts,
+  });
+  mobMenu.classList.add("index__mobile-menu");
+  document.body.appendChild(mobMenuContainer);
 
   mobMenuBtn.addEventListener("click", () => {
-    const mobMenuContainer = document.createElement("div");
-    mobMenuContainer.classList.add("index__mobile-menu");
-    mobMenuBtn.classList.add("active");
+    document.body.classList.add("disabled");
+    mobMenuBtn.classList.add("disabled");
     mobMenuCloseBtn.classList.add("active");
-    mainContainer.classList.add("disabled");
-    const mobMenu = document.createElement("div");
+    document.body.classList.add("disabled");
     mobMenu.classList.add("mobile-menu__items");
-    const mobMenuContacts = document.createElement("div");
+    mobMenu.classList.remove("index__mobile-menu");
     mobMenuContacts.classList.add("mobile-menu__contacts");
-    const footer = document.querySelector("footer");
-    footer.classList.add("disabled");
-    addElement({
-      createdElement: "a",
-      content: "ГЛАВНАЯ",
-      link: "/",
-      addClass: `mobile-menu__item`,
-      parentElement: mobMenu,
-      grandParentElement: mobMenuContainer,
-    });
-
-    addElement({
-      createdElement: "a",
-      content: "КАТАЛОГ",
-      addClass: `mobile-menu__item`,
-      parentElement: mobMenu,
-    });
-
-    addElement({
-      createdElement: "a",
-      content: "СТАТЬИ",
-      addClass: `mobile-menu__item`,
-      parentElement: mobMenu,
-    });
-
-    addElement({
-      createdElement: "a",
-      content: "КОНТАКТЫ",
-      link: "/contacts/",
-      addClass: `mobile-menu__item`,
-      parentElement: mobMenu,
-    });
-
-    addElement({
-      createdElement: "a",
-      content: "О НАС",
-      addClass: `mobile-menu__item`,
-      parentElement: mobMenu,
-    });
-
-    addElement({
-      createdElement: "a",
-      content: "+7 (495) 369-39-61",
-      link: "",
-      addClass: "mobile-contacts__phone",
-      parentElement: mobMenuContacts,
-      grandParentElement: mobMenuContainer,
-    });
-
-    addElement({
-      createdElement: "button",
-      content: "ЗАКАЗАТЬ ЗВОНОК!",
-      addClass: "mobile-contacts__btn",
-      parentElement: mobMenuContacts,
-    });
-    document.body.appendChild(mobMenuContainer);
+    mobMenuContainer.classList.add("active");
   });
 
   mobMenuCloseBtn.addEventListener("click", () => {
     const mobMenuContainer = document.querySelector(".index__mobile-menu");
     const footer = document.querySelector("footer");
-    footer.classList.remove("disabled");
-    document.body.removeChild(mobMenuContainer);
-    mobMenuContainer.classList.add("disabled");
+    mobMenuContainer.classList.remove("active");
     mainContainer.classList.remove("disabled");
     mobMenuCloseBtn.classList.remove("active");
-    mobMenuBtn.classList.remove("active");
+    mobMenuBtn.classList.remove("disabled");
+    document.body.classList.remove("disabled");
   });
 };
 createMobMenu();
@@ -199,6 +227,14 @@ createMobMenu();
 const createBody = () => {
   // TITLE //
   const titleContainer = document.querySelector(".index-title-container");
+  const titleImgContainer = document.querySelector(
+    ".index-title-container__img"
+  );
+  addElement({
+    createdElement: "img",
+    img: titleImg,
+    parentElement: titleImgContainer,
+  });
 
   addElement({
     createdElement: "h1",
@@ -234,6 +270,15 @@ const createBody = () => {
   const serviceContainer = document.querySelector(".index-service-container");
   const serviceTextContainer = document.createElement("div");
   serviceTextContainer.classList.add("index-service-container__text");
+  const serviceImgContainer = document.querySelector(
+    ".index-service-container__img"
+  );
+
+  addElement({
+    createdElement: "img",
+    img: serviceImg,
+    parentElement: serviceImgContainer,
+  });
 
   addElement({
     createdElement: "h1",
@@ -733,6 +778,14 @@ const createFooter = () => {
     footerText3rd.appendChild(el);
   });
 
+  const footerLogo = document.querySelector(".footer-container__logo");
+
+  addElement({
+    createdElement: "img",
+    img: footerLogoImg,
+    parentElement: footerLogo,
+  });
+
   addElement({
     createdElement: "span",
     content: `© 2022 LLC SBV 
@@ -983,3 +1036,94 @@ const createFooter = () => {
   });
 };
 createFooter();
+
+//  FORM  //
+
+const headerButton = document.querySelector(".header-contacts__btn");
+const formArea = document.querySelector(".index-form-area");
+const formContainer = document.querySelector(".index-form-container");
+const mobileMenuBtn = document.querySelector('.mobile-contacts__btn');
+
+formContainer.innerHTML = `<h1>ЗАКАЗАТЬ ЗВОНОК</h1>
+<form action="">
+  <div class="form__input-container">
+    <label for="name-input" class="input-label">Имя *</label>
+    <input
+      type="text"
+      required="required"
+      id="name-input"
+      title="Заполните поле"
+      name="name"
+      class="form__input"
+    />
+  </div>
+  <div class="form__input-container">
+    <label for="phone-input" class="input-label">Телефон *</label>
+    <input
+      type="text"
+      required="required"
+      id="phone-input"
+      title="Заполните поле"
+      name="phone"
+      class="form__input"
+    />
+  </div>
+  <div class="form__input-container">
+    <label for="theme-input" class="input-label">Темя обращения </label>
+    <input
+      type="text"
+      required="required"
+      id="theme-input"
+      title="Заполните поле"
+      name="theme"
+      class="form__input"
+    />
+  </div>
+  <button class="form__btn" type="submit">ЗАКАЗАТЬ ЗВОНОК!</button>
+</form>`;
+
+addElement({
+  createdElement: "img",
+  img: imageForm,
+  addClass: "form__img",
+  parentElement: formContainer,
+});
+
+const inputsContainer = document.querySelectorAll(".form__input-container");
+const formInputs = document.querySelectorAll(".form__input");
+
+inputsContainer.forEach((el) => {
+  el.addEventListener("click", () => {
+    el.classList.add("active");
+  });
+});
+
+const closeForm = () => {
+  const inputsContainer = document.querySelectorAll(
+    ".form__input-container.active"
+  );
+  formArea.classList.remove("active");
+  inputsContainer.forEach((el) => {
+    el?.classList.remove("active");
+  });
+  formContainer.classList.remove("active");
+  formInputs.forEach((el) => {
+    el.value = "";
+  });
+  document.body.classList.remove("disabled");
+};
+
+const formFunction = () => {
+  formArea.classList.add("active");
+  formContainer.classList.add("active");
+  document.body.classList.add("disabled");
+  formArea.addEventListener("click", closeForm);
+};
+
+headerButton.addEventListener("click", formFunction);
+const serviceBtn = document.querySelector(".index-service__btn");
+serviceBtn.addEventListener("click", formFunction);
+const traitsBtn = document.querySelector(".traits-container__btn");
+traitsBtn.addEventListener("click", formFunction);
+
+mobileMenuBtn.addEventListener('click', formFunction);
