@@ -28,6 +28,10 @@ module.exports = {
       { test: /\.css$/, use: [MiniCssExtractPlugin.loader, "css-loader"] },
       { test: /\.(js)$/, use: "babel-loader" },
       {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
+      },
+      {
         test: /\.s[ac]ss$/,
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
@@ -42,6 +46,7 @@ module.exports = {
         ? "[name].[contenthash].js"
         : "./[name]/[name].[contenthash].js";
     },
+    assetModuleFilename: 'img/[name][ext]'
   },
   plugins: [
     ...PAGES.map((page) =>

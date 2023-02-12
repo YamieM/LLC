@@ -51,6 +51,7 @@ module.exports = {
         ? "[name].[contenthash].js"
         : "./[name]/[name].[contenthash].js";
     },
+    assetModuleFilename: 'img/[name][ext]'
   },
   plugins: [
     ...PAGES.map((page) =>
