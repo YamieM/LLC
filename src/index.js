@@ -29,7 +29,7 @@ import serviceImg from "./img/serviceImg.svg";
 import footerLogoImg from "./img/footerLogo.svg";
 
 const mainContainer = document.querySelector(".index-main-container");
-const addElement = ({
+export const addElement = ({
   createdElement,
   content = "",
   img = "",
@@ -60,10 +60,12 @@ const addElement = ({
   }
   return mainContainer;
 };
-const createHeader = () => {
-  const headerMenu = document.querySelector(".header-container__menu");
-  const headerContacts = document.querySelector(".header-container__contacts");
-  const headerLogo = document.querySelector(".header-container__logo");
+export const createHeader = (page) => {
+  const headerMenu = document.querySelector(`.${page}-header-container__menu`);
+  const headerContacts = document.querySelector(
+    `.${page}-header-container__contacts`
+  );
+  const headerLogo = document.querySelector(`.${page}-header-container__logo`);
   addElement({
     createdElement: "img",
     img: logoHeader,
@@ -116,23 +118,26 @@ const createHeader = () => {
 
   addElement({
     createdElement: "button",
-    content: "ЗАКАЗАТЬ ЗВОНОК!",
+    content: "ЗАКАЗАТЬ ЗВОНОК",
     parentElement: headerContacts,
     addClass: "header-contacts__btn",
   });
 };
-createHeader();
+createHeader("index");
 
 //  MOB MENU  //
 
-const createMobMenu = () => {
-  const mobMenuBtn = document.querySelector(".header-container__mob-menu");
-  const mobMenuCloseBtn = document.querySelector(".mob-menu_close");
+export function createMobMenu(page) {
+  const mainContainer = document.querySelector(`.${page}-main-container`);
+  const mobMenuBtn = document.querySelector(
+    `.${page}-header-container__mob-menu`
+  );
+  const mobMenuCloseBtn = document.querySelector(`.${page}-mob-menu_close`);
   const mobMenuContainer = document.createElement("div");
   const mobMenu = document.createElement("div");
   const mobMenuContacts = document.createElement("div");
   const footer = document.querySelector("footer");
-  mobMenuContainer.classList.add("index__mobile-menu");
+  mobMenuContainer.classList.add(`${page}__mobile-menu-container`);
   addElement({
     createdElement: "img",
     img: mobMenuBtnImg,
@@ -187,7 +192,7 @@ const createMobMenu = () => {
     createdElement: "a",
     content: "+7 (495) 369-39-61",
     link: "tel: +7 (495) 369-39-61",
-    addClass: "mobile-contacts__phone",
+    addClass: `${page}-mobile-contacts__phone`,
     parentElement: mobMenuContacts,
     grandParentElement: mobMenuContainer,
   });
@@ -195,34 +200,35 @@ const createMobMenu = () => {
   addElement({
     createdElement: "button",
     content: "ЗАКАЗАТЬ ЗВОНОК!",
-    addClass: "mobile-contacts__btn",
+    addClass: `${page}-mobile-contacts__btn`,
     parentElement: mobMenuContacts,
   });
-  mobMenu.classList.add("index__mobile-menu");
-  document.body.appendChild(mobMenuContainer);
+  mobMenu.classList.add(`${page}-mobile-menu__items`);
+  mainContainer?.appendChild(mobMenuContainer);
 
-  mobMenuBtn.addEventListener("click", () => {
+  mobMenuBtn?.addEventListener("click", () => {
     document.body.classList.add("disabled");
     mobMenuBtn.classList.add("disabled");
     mobMenuCloseBtn.classList.add("active");
     document.body.classList.add("disabled");
-    mobMenu.classList.add("mobile-menu__items");
-    mobMenu.classList.remove("index__mobile-menu");
+    mobMenu.classList.add(`${page}-mobile-menu__items`);
     mobMenuContacts.classList.add("mobile-menu__contacts");
     mobMenuContainer.classList.add("active");
   });
 
-  mobMenuCloseBtn.addEventListener("click", () => {
-    const mobMenuContainer = document.querySelector(".index__mobile-menu");
+  mobMenuCloseBtn?.addEventListener("click", () => {
+    const mobMenuContainer = document.querySelector(
+      `.${page}__mobile-menu-container`
+    );
     const footer = document.querySelector("footer");
-    mobMenuContainer.classList.remove("active");
+    mobMenuContainer?.classList.remove("active");
     mainContainer.classList.remove("disabled");
     mobMenuCloseBtn.classList.remove("active");
     mobMenuBtn.classList.remove("disabled");
     document.body.classList.remove("disabled");
   });
-};
-createMobMenu();
+}
+createMobMenu("index");
 
 const createBody = () => {
   // TITLE //
@@ -388,7 +394,7 @@ const createBody = () => {
     "Подзаголовок (опционально)",
     "Подзаголовок (опционально)",
   ];
-  productsContainer.appendChild(productsItems);
+  productsContainer?.appendChild(productsItems);
   let i = 1;
   while (i <= 17) {
     const itemBox = document.createElement("div");
@@ -431,7 +437,7 @@ const createBody = () => {
 
   const btnDiv = document.createElement("div");
   btnDiv.classList.add("products-items__button-div");
-  productsContainer.appendChild(btnDiv);
+  productsContainer?.appendChild(btnDiv);
   addElement({
     createdElement: "button",
     content: "ПЕРЕЙТИ В КАТАЛОГ",
@@ -460,7 +466,7 @@ const createBody = () => {
 
   const traitsItems = document.createElement("div");
   traitsItems.classList.add("index-traits-container__items");
-  traitsContainer.appendChild(traitsItems);
+  traitsContainer?.appendChild(traitsItems);
   const qualityTrait = document.createElement("div");
   qualityTrait.classList.add("traits-container-items__quality");
   traitsItems.appendChild(qualityTrait);
@@ -588,7 +594,7 @@ const createBody = () => {
     const traitsContainer = document.querySelector(".index-traits-container");
     const slider = document.createElement("div");
     slider.classList.add("index-traits-container__slider");
-    traitsContainer.appendChild(slider);
+    traitsContainer?.appendChild(slider);
     const qualityTrait = document.createElement("div");
     qualityTrait.classList.add("traits-container__slide-items");
     slider.appendChild(qualityTrait);
@@ -724,328 +730,327 @@ const createBody = () => {
 createBody();
 
 //  FOOTER  //
-const createFooter = () => {
+export const createFooter = () => {
   const footerContainer = document.querySelector(".footer-container");
-  const footerText1st = document.createElement("div");
-  const footerText2nd = document.createElement("div");
-  const footerText3rd = document.createElement("div");
-  [footerText1st, footerText2nd, footerText3rd].map((el) => {
-    footerContainer.appendChild(el);
-  });
-  const adrDiv = document.createElement("div");
-  footerText2nd.appendChild(adrDiv);
-  const contDiv = document.createElement("div");
-  footerText2nd.appendChild(contDiv);
-  footerText1st.classList.add("footer-container__text-area");
-  footerText2nd.classList.add("footer-container__text-area2");
-  footerText3rd.classList.add("footer-container__text-area3");
+  if (footerContainer.children.length < 2) {
+    const footerText1st = document.createElement("div");
+    const footerText2nd = document.createElement("div");
+    const footerText3rd = document.createElement("div");
+    [footerText1st, footerText2nd, footerText3rd].map((el) => {
+      footerContainer.appendChild(el);
+    });
+    const adrDiv = document.createElement("div");
+    footerText2nd.appendChild(adrDiv);
+    const contDiv = document.createElement("div");
+    footerText2nd.appendChild(contDiv);
+    footerText1st.classList.add("footer-container__text-area");
+    footerText2nd.classList.add("footer-container__text-area2");
+    footerText3rd.classList.add("footer-container__text-area3");
 
-  const textColumns1 = document.createElement("div");
-  const textColumns2 = document.createElement("div");
-  const textColumns3 = document.createElement("div");
-  const textColumns4 = document.createElement("div");
-  const textColumns5 = document.createElement("div");
-  const textColumns6 = document.createElement("div");
-  const textColumns7 = document.createElement("div");
-  const textColumns8 = document.createElement("div");
-  const textColumns9 = document.createElement("div");
-  const textColumns10 = document.createElement("div");
-  const textColumns11 = document.createElement("div");
-  const textColumns12 = document.createElement("div");
-  const textColumns13 = document.createElement("div");
-  const textColumns14 = document.createElement("div");
-  const textColumns15 = document.createElement("div");
-  const textColumns16 = document.createElement("div");
+    const textColumns1 = document.createElement("div");
+    const textColumns2 = document.createElement("div");
+    const textColumns3 = document.createElement("div");
+    const textColumns4 = document.createElement("div");
+    const textColumns5 = document.createElement("div");
+    const textColumns6 = document.createElement("div");
+    const textColumns7 = document.createElement("div");
+    const textColumns8 = document.createElement("div");
+    const textColumns9 = document.createElement("div");
+    const textColumns10 = document.createElement("div");
+    const textColumns11 = document.createElement("div");
+    const textColumns12 = document.createElement("div");
+    const textColumns13 = document.createElement("div");
+    const textColumns14 = document.createElement("div");
+    const textColumns15 = document.createElement("div");
+    const textColumns16 = document.createElement("div");
 
-  [
-    textColumns1,
-    textColumns2,
-    textColumns3,
-    textColumns4,
-    textColumns5,
-    textColumns6,
-    textColumns7,
-    textColumns8,
-    textColumns9,
-    textColumns10,
-    textColumns11,
-    textColumns12,
-    textColumns13,
-    textColumns14,
-    textColumns15,
-    textColumns16,
-  ].map((el) => {
-    footerText3rd.appendChild(el);
-  });
+    [
+      textColumns1,
+      textColumns2,
+      textColumns3,
+      textColumns4,
+      textColumns5,
+      textColumns6,
+      textColumns7,
+      textColumns8,
+      textColumns9,
+      textColumns10,
+      textColumns11,
+      textColumns12,
+      textColumns13,
+      textColumns14,
+      textColumns15,
+      textColumns16,
+    ].map((el) => {
+      footerText3rd.appendChild(el);
+    });
 
-  const footerLogo = document.querySelector(".footer-container__logo");
+    const footerLogo = document.querySelector(".footer-container__logo");
 
-  addElement({
-    createdElement: "img",
-    img: footerLogoImg,
-    parentElement: footerLogo,
-  });
+    addElement({
+      createdElement: "img",
+      img: footerLogoImg,
+      parentElement: footerLogo,
+    });
 
-  addElement({
-    createdElement: "span",
-    content: `© 2022 LLC SBV 
+    addElement({
+      createdElement: "span",
+      content: `© 2022 LLC SBV 
     Художественное литье из <br>
     чугуна, латуни и бронзы. 
     Все права защищены`,
-    addClass: "text-area__text",
-    parentElement: footerText1st,
-  });
+      addClass: "text-area__text",
+      parentElement: footerText1st,
+    });
 
-  addElement({
-    createdElement: "h1",
-    content: "АДРЕС",
-    addClass: "text-area__contacts-title",
-    parentElement: adrDiv,
-  });
+    addElement({
+      createdElement: "h1",
+      content: "АДРЕС",
+      addClass: "text-area__contacts-title",
+      parentElement: adrDiv,
+    });
 
-  addElement({
-    createdElement: "span",
-    content: `Московская область 
+    addElement({
+      createdElement: "span",
+      content: `Московская область 
     г. Ногинск ул. 200 лет Города, д. 2`,
-    addClass: "text-area__text",
-    parentElement: adrDiv,
-  });
+      addClass: "text-area__text",
+      parentElement: adrDiv,
+    });
 
-  addElement({
-    createdElement: "h1",
-    content: "ГРАФИК",
-    addClass: "text-area__contacts-title",
-    parentElement: contDiv,
-  });
+    addElement({
+      createdElement: "h1",
+      content: "ГРАФИК",
+      addClass: "text-area__contacts-title",
+      parentElement: contDiv,
+    });
 
-  addElement({
-    createdElement: "span",
-    content: `пн – пт с 9:00 до 17:00`,
-    addClass: "text-area__text",
-    parentElement: contDiv,
-  });
+    addElement({
+      createdElement: "span",
+      content: `пн – пт с 9:00 до 17:00`,
+      addClass: "text-area__text",
+      parentElement: contDiv,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Ограждения",
-    addClass: "text-area__catalog-title",
-    parentElement: textColumns1,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Ограждения",
+      addClass: "text-area__catalog-title",
+      parentElement: textColumns1,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Терассы патио уличные",
-    addClass: "text-area__catalog-text",
-    parentElement: textColumns1,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Терассы патио уличные",
+      addClass: "text-area__catalog-text",
+      parentElement: textColumns1,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Ритуальные ограждения",
-    addClass: "text-area__catalog-text",
-    parentElement: textColumns1,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Ритуальные ограждения",
+      addClass: "text-area__catalog-text",
+      parentElement: textColumns1,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Ограждения лестничных маршей",
-    addClass: "text-area__catalog-text",
-    parentElement: textColumns1,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Ограждения лестничных маршей",
+      addClass: "text-area__catalog-text",
+      parentElement: textColumns1,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Столбы и фонари",
-    addClass: "text-area__catalog-title",
-    parentElement: textColumns2,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Столбы и фонари",
+      addClass: "text-area__catalog-title",
+      parentElement: textColumns2,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Фонари",
-    addClass: "text-area__catalog-text",
-    parentElement: textColumns2,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Фонари",
+      addClass: "text-area__catalog-text",
+      parentElement: textColumns2,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Заходные чугунные столбы",
-    addClass: "text-area__catalog-text",
-    parentElement: textColumns2,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Заходные чугунные столбы",
+      addClass: "text-area__catalog-text",
+      parentElement: textColumns2,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Опорные столбы",
-    addClass: "text-area__catalog-text",
-    parentElement: textColumns2,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Опорные столбы",
+      addClass: "text-area__catalog-text",
+      parentElement: textColumns2,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Камины, мангалы и барбекю",
-    addClass: "text-area__catalog-title",
-    parentElement: textColumns3,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Камины, мангалы и барбекю",
+      addClass: "text-area__catalog-title",
+      parentElement: textColumns3,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Терассы патио уличные",
-    addClass: "text-area__catalog-text",
-    parentElement: textColumns3,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Терассы патио уличные",
+      addClass: "text-area__catalog-text",
+      parentElement: textColumns3,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Ритуальные ограждения",
-    addClass: "text-area__catalog-text",
-    parentElement: textColumns3,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Ритуальные ограждения",
+      addClass: "text-area__catalog-text",
+      parentElement: textColumns3,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Ограждения лестничных маршей",
-    addClass: "text-area__catalog-text",
-    parentElement: textColumns3,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Ограждения лестничных маршей",
+      addClass: "text-area__catalog-text",
+      parentElement: textColumns3,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Козырьки, навесы, входные группы",
-    addClass: "text-area__catalog-title",
-    parentElement: textColumns4,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Козырьки, навесы, входные группы",
+      addClass: "text-area__catalog-title",
+      parentElement: textColumns4,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Козырьки",
-    addClass: "text-area__catalog-text",
-    parentElement: textColumns4,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Козырьки",
+      addClass: "text-area__catalog-text",
+      parentElement: textColumns4,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Металлические навесы",
-    addClass: "text-area__catalog-text",
-    parentElement: textColumns4,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Металлические навесы",
+      addClass: "text-area__catalog-text",
+      parentElement: textColumns4,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Входные группы",
-    addClass: "text-area__catalog-text",
-    parentElement: textColumns4,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Входные группы",
+      addClass: "text-area__catalog-text",
+      parentElement: textColumns4,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Лестницы",
-    addClass: "text-area__catalog-title",
-    parentElement: textColumns5,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Лестницы",
+      addClass: "text-area__catalog-title",
+      parentElement: textColumns5,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Винтовые лестницы",
-    addClass: "text-area__catalog-text",
-    parentElement: textColumns5,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Винтовые лестницы",
+      addClass: "text-area__catalog-text",
+      parentElement: textColumns5,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Маршевые лестницы",
-    addClass: "text-area__catalog-text",
-    parentElement: textColumns5,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Маршевые лестницы",
+      addClass: "text-area__catalog-text",
+      parentElement: textColumns5,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Садово-парковая мебель",
-    addClass: "text-area__catalog-title",
-    parentElement: textColumns6,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Садово-парковая мебель",
+      addClass: "text-area__catalog-title",
+      parentElement: textColumns6,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Оконные решетки",
-    addClass: "text-area__catalog-title",
-    parentElement: textColumns7,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Оконные решетки",
+      addClass: "text-area__catalog-title",
+      parentElement: textColumns7,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Изделия из стали",
-    addClass: "text-area__catalog-title",
-    parentElement: textColumns8,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Изделия из стали",
+      addClass: "text-area__catalog-title",
+      parentElement: textColumns8,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Латунь, бронза",
-    addClass: "text-area__catalog-title",
-    parentElement: textColumns9,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Латунь, бронза",
+      addClass: "text-area__catalog-title",
+      parentElement: textColumns9,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Балясины",
-    addClass: "text-area__catalog-title",
-    parentElement: textColumns10,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Балясины",
+      addClass: "text-area__catalog-title",
+      parentElement: textColumns10,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Ворота, калитки",
-    addClass: "text-area__catalog-title",
-    parentElement: textColumns11,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Ворота, калитки",
+      addClass: "text-area__catalog-title",
+      parentElement: textColumns11,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Кронштейны",
-    addClass: "text-area__catalog-title",
-    parentElement: textColumns12,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Кронштейны",
+      addClass: "text-area__catalog-title",
+      parentElement: textColumns12,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Изделия из композитных материалов",
-    addClass: "text-area__catalog-title",
-    parentElement: textColumns13,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Изделия из композитных материалов",
+      addClass: "text-area__catalog-title",
+      parentElement: textColumns13,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Балконы и французкие балконы",
-    addClass: "text-area__catalog-title",
-    parentElement: textColumns14,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Балконы и французкие балконы",
+      addClass: "text-area__catalog-title",
+      parentElement: textColumns14,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Страница дизайнера",
-    addClass: "text-area__catalog-title",
-    parentElement: textColumns15,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Страница дизайнера",
+      addClass: "text-area__catalog-title",
+      parentElement: textColumns15,
+    });
 
-  addElement({
-    createdElement: "a",
-    content: "Беседки",
-    addClass: "text-area__catalog-title",
-    parentElement: textColumns5,
-  });
+    addElement({
+      createdElement: "a",
+      content: "Беседки",
+      addClass: "text-area__catalog-title",
+      parentElement: textColumns5,
+    });
+  }
 };
 createFooter();
 
 //  FORM  //
 
-const headerButton = document.querySelector(".header-contacts__btn");
-const formArea = document.querySelector(".index-form-area");
-const formContainer = document.querySelector(".index-form-container");
-const mobileMenuBtn = document.querySelector('.mobile-contacts__btn');
-
-formContainer.innerHTML = `<h1>ЗАКАЗАТЬ ЗВОНОК</h1>
-<form action="">
+export const form = (page) => {
+  const createForm = () => {
+    formContainer.innerHTML = `<h1>ЗАКАЗАТЬ ЗВОНОК</h1>
+<form action="" class = 'form-call'>
   <div class="form__input-container">
     <label for="name-input" class="input-label">Имя *</label>
     <input
@@ -1082,48 +1087,57 @@ formContainer.innerHTML = `<h1>ЗАКАЗАТЬ ЗВОНОК</h1>
   <button class="form__btn" type="submit">ЗАКАЗАТЬ ЗВОНОК!</button>
 </form>`;
 
-addElement({
-  createdElement: "img",
-  img: imageForm,
-  addClass: "form__img",
-  parentElement: formContainer,
-});
+    addElement({
+      createdElement: "img",
+      img: imageForm,
+      addClass: "form__img",
+      parentElement: formContainer,
+    });
 
-const inputsContainer = document.querySelectorAll(".form__input-container");
-const formInputs = document.querySelectorAll(".form__input");
+    const inputsContainer = document.querySelectorAll(".form__input-container");
 
-inputsContainer.forEach((el) => {
-  el.addEventListener("click", () => {
-    el.classList.add("active");
-  });
-});
+    inputsContainer.forEach((el) => {
+      el.addEventListener("click", () => {
+        el.classList.add("active");
+      });
+    });
 
-const closeForm = () => {
-  const inputsContainer = document.querySelectorAll(
-    ".form__input-container.active"
-  );
-  formArea.classList.remove("active");
-  inputsContainer.forEach((el) => {
-    el?.classList.remove("active");
-  });
-  formContainer.classList.remove("active");
-  formInputs.forEach((el) => {
-    el.value = "";
-  });
-  document.body.classList.remove("disabled");
-};
+    formArea.classList.add("active");
+    formContainer.classList.add("active");
+    document.body.classList.add("disabled");
+  };
+  const headerButton = document.querySelector(`.header-contacts__btn`);
+  const formArea = document.querySelector(`.form-area`);
+  const formContainer = document.querySelector(`.form-container`);
+  const mobileMenuBtn = document.querySelector(`.${page}-mobile-contacts__btn`);
 
-const formFunction = () => {
-  formArea.classList.add("active");
-  formContainer.classList.add("active");
-  document.body.classList.add("disabled");
+  headerButton?.addEventListener("click", createForm);
+  const serviceBtn = document.querySelector(".index-service__btn");
+  serviceBtn?.addEventListener("click", createForm);
+  const traitsBtn = document.querySelector(".traits-container__btn");
+  traitsBtn?.addEventListener("click", createForm);
+  mobileMenuBtn?.addEventListener("click", createForm);
+  const titleBtn = document.querySelector(".contacts-title-container__btn");
+  titleBtn?.addEventListener("click", createForm);
+
+  const closeForm = () => {
+    const formInputs = document.querySelectorAll(".form__input");
+    const inputsContainer = document.querySelectorAll(
+      ".form__input-container.active"
+    );
+
+    formArea.classList.remove("active");
+    inputsContainer.forEach((el) => {
+      el?.classList.remove("active");
+    });
+
+    formContainer.classList.remove("active");
+    formInputs.forEach((el) => {
+      el.value = "";
+    });
+
+    document.body.classList.remove("disabled");
+  };
   formArea.addEventListener("click", closeForm);
 };
-
-headerButton.addEventListener("click", formFunction);
-const serviceBtn = document.querySelector(".index-service__btn");
-serviceBtn.addEventListener("click", formFunction);
-const traitsBtn = document.querySelector(".traits-container__btn");
-traitsBtn.addEventListener("click", formFunction);
-
-mobileMenuBtn.addEventListener('click', formFunction);
+form("index");
