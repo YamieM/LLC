@@ -27,6 +27,7 @@ import mobMenuBtnClose from "./img/closeBtn.svg";
 import titleImg from "./img/titleImg.svg";
 import serviceImg from "./img/serviceImg.svg";
 import footerLogoImg from "./img/footerLogo.svg";
+import IMask from "imask";
 
 const mainContainer = document.querySelector(".index-main-container");
 export const addElement = ({
@@ -1046,38 +1047,38 @@ export const createFooter = () => {
 createFooter();
 
 //  FORM  //
-
-export const form = (page) => {
+export const formFunction = (page) => {
   const createForm = () => {
     formContainer.innerHTML = `<h1>ЗАКАЗАТЬ ЗВОНОК</h1>
-<form action="" class = 'form-call'>
+<form action="" id = 'callForm' name = 'callForm' class = 'form-call'>
   <div class="form__input-container">
-    <label for="name-input" class="input-label">Имя *</label>
+    <label for="nameInput" class="input-label">Имя *</label>
     <input
       type="text"
       required="required"
-      id="name-input"
+      id="nameInput"
       title="Заполните поле"
       name="name"
-      class="form__input"
+      class="form__input"      
     />
   </div>
   <div class="form__input-container">
-    <label for="phone-input" class="input-label">Телефон *</label>
+    <label for="phoneInput" class="input-label">Телефон *</label>
     <input
       type="text"
       required="required"
-      id="phone-input"
+      id="phoneInput"
       title="Заполните поле"
       name="phone"
       class="form__input"
+      min="17"
+      max="17"
     />
   </div>
   <div class="form__input-container">
     <label for="theme-input" class="input-label">Темя обращения </label>
     <input
       type="text"
-      required="required"
       id="theme-input"
       title="Заполните поле"
       name="theme"
@@ -1103,11 +1104,90 @@ export const form = (page) => {
     });
 
     formArea.classList.add("active");
+    overpop.classList.add("active");
     formContainer.classList.add("active");
     document.body.classList.add("disabled");
+
+    const form = document.forms.callForm;
+    const element = form.elements.phoneInput;
+
+    element?.addEventListener("click", () => {
+      element.focus();
+      element.setSelectionRange(0, 0);
+      element.value = "+7(";
+      const maskOptions = {
+        mask: "+7 (000)000-00-00",
+      };
+      const mask = IMask(element, maskOptions);
+    });
+
+    const nameInput = document.querySelector("#nameInput");
+    const phoneInput = document.querySelector("#phoneInput");
+
+    const valid = () => {
+      let result = true;
+
+      if (nameInput.value > 1 && phoneInput.value === 17) {
+        const invalidMsg = document.querySelector(".invalid-msg__name");
+        const invalidMsg2 = document.querySelector(".invalid-msg__phone");
+        if (invalidMsg) {
+          form.removeChild(invalidMsg);
+        }
+        if (invalidMsg2) {
+          form.removeChild(invalidMsg2);
+        }
+        return result;
+      }
+
+      if (nameInput.value.length < 2) {
+        const invalidMsgOld = document.querySelector(".invalid-msg__name");
+        if (!invalidMsgOld) {
+          const invalidMsg = document.createElement("p");
+          nameInput.classList.add("invalid-name");
+          invalidMsg.innerHTML = "Слишком короткое имя";
+          invalidMsg.classList.add("invalid-msg__name");
+          form.insertBefore(invalidMsg, inputsContainer[1]);
+        }
+        result = false;
+      } else {
+        const invalidMsgOld = document.querySelector(".invalid-msg__name");
+        if (invalidMsgOld) {
+          form.removeChild(invalidMsgOld);
+        }
+        nameInput.classList.remove("invalid-name");
+      }
+
+      if (phoneInput.value.length < 17) {
+        const invalidMsgOld = document.querySelector(".invalid-msg__phone");
+        if (!invalidMsgOld) {
+          const invalidMsg = document.createElement("p");
+          phoneInput.classList.add("invalid-phone");
+          invalidMsg.innerHTML = "Некорректный номер";
+          invalidMsg.classList.add("invalid-msg__phone");
+          form.insertBefore(invalidMsg, inputsContainer[2]);
+        }
+        result = false;
+      } else {
+        const invalidMsgOld = document.querySelector(".invalid-msg__phone");
+        if (invalidMsgOld) {
+          form.removeChild(invalidMsgOld);
+        }
+        phoneInput.classList.remove("invalid-phone");
+      }
+
+      return result;
+    };
+
+    form?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (valid(this) === true) {
+        form.submit();
+      }
+    });
   };
   const headerButton = document.querySelector(`.header-contacts__btn`);
   const formArea = document.querySelector(`.form-area`);
+  const overpop = document.querySelector(".overpop");
   const formContainer = document.querySelector(`.form-container`);
   const mobileMenuBtn = document.querySelector(`.${page}-mobile-contacts__btn`);
 
@@ -1127,6 +1207,7 @@ export const form = (page) => {
     );
 
     formArea.classList.remove("active");
+    overpop.classList.remove("active");
     inputsContainer.forEach((el) => {
       el?.classList.remove("active");
     });
@@ -1138,6 +1219,7 @@ export const form = (page) => {
 
     document.body.classList.remove("disabled");
   };
-  formArea.addEventListener("click", closeForm);
+  overpop.addEventListener("click", closeForm);
 };
-form("index");
+
+formFunction("index");

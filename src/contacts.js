@@ -5,7 +5,7 @@ import {
   createFooter,
   createMobMenu,
   addElement,
-  form,
+  formFunction,
 } from "./index.js";
 import logoWhite from "./img/logoHeaderWhite.svg";
 import mobMenuBtnWhite from "./img/mobMenuBtnWhite.svg";
@@ -289,47 +289,45 @@ const createBody = () => {
   const formContainer = document.querySelector(".contacts-form-container");
 
   formContainer.innerHTML = `<h1 class = 'contacts__title'>НАПИСАТЬ НАМ</h1>
-<form action="" class = 'contacts-form'>
+<form action="" class = 'contacts-form' name = 'contactsForm'>
   <div class="contacts-form__input-container">
-    <label for="contacts-name-input" class="contacts-input-label">Имя </label>
+    <label for="contactsNameInput" class="contacts-input-label">Имя </label>
     <input
       type="text"
       required="required"
-      id="contacts-name-input"
+      id="contactsNameInput"
       title="Заполните поле"
       name="name"
       class="contacts-form__input"
     />
   </div>
   <div class="contacts-form__input-container">
-    <label for="contacts-phone-input" class="contacts-input-label">Телефон </label>
+    <label for="contactsPhoneInput" class="contacts-input-label">Телефон </label>
     <input
       type="text"
-      id="contacts-phone-input"
+      id="contactsPhoneInput"
       title="Заполните поле"
       name="phone"
       class="contacts-form__input"
     />
   </div>
   <div class="contacts-form__input-container">
-    <label for="contacts-mail-input" class="contacts-input-label">Почта </label>
+    <label for="contactsMailInput" class="contacts-input-label">Почта </label>
     <input
-      type="text"
+      type="email"
       required="required"
-      id="contacts-mail-input"
+      id="contactsMailInput"
       title="Заполните поле"
       name="mail"
       class="contacts-form__input"
     />
   </div>
   <div class="contacts-form__input-container">
-    <label for="contacts-text-input" class="contacts-input-label">Сообщение </label>
+    <label for="contactsMsgInput" class="contacts-input-label">Сообщение </label>
     <textarea       
-      id="contacts-text-input"
+      id="contactsMsgInput"
       title="Заполните поле"     
-      class="contacts-form__input">
-         
-    </textarea>
+      class="contacts-form__input"value=""></textarea>
   </div>
   <button class="contacts-form__btn" type="submit">ОТПРАВИТЬ СООБЩЕНИЕ</button>
 </form>`;
@@ -343,9 +341,122 @@ const createBody = () => {
       el.classList.add("active");
     });
   });
-  
+
+  const form = document.forms.contactsForm;
+  const element = form.elements.contactsPhoneInput;
+
+  element?.addEventListener("click", () => {
+    element.focus();
+    element.setSelectionRange(0, 0);
+    element.value = "+7(";
+    const maskOptions = {
+      mask: "+7 (000)000-00-00",
+    };
+    const mask = IMask(element, maskOptions);
+  });
+
+  const nameInput = document.querySelector("#contactsNameInput");
+  const phoneInput = document.querySelector("#contactsPhoneInput");
+
+  const msgArea = document.querySelector("#contactsMsgInput");
+  const valid = () => {
+    let result = true;
+
+    if (
+      nameInput.value.length > 1 &&
+      phoneInput.value.length === 17 &&
+      msgArea.value.length > 19
+    ) {
+      const invalidMsg = document.querySelector(".contacts-invalid-msg__name");
+      const invalidMsg2 = document.querySelector(
+        ".contacts-invalid-msg__phone"
+      );
+      const invalidMsg3 = document.querySelector(".contacts-invalid-msg__msg");
+      if (invalidMsg) {
+        form.removeChild(invalidMsg);
+      }
+      if (invalidMsg2) {
+        form.removeChild(invalidMsg2);
+      }
+      if (invalidMsg3) {
+        form.removeChild(invalidMsg3);
+      }
+      return result;
+    }
+
+    if (nameInput.value.length < 2) {
+      const invalidMsgOld = document.querySelector(".invalid-msg__name");
+      if (!invalidMsgOld) {
+        const invalidMsg = document.createElement("p");
+        nameInput.classList.add("invalid-name");
+        invalidMsg.innerHTML = "Слишком короткое имя";
+        invalidMsg.classList.add("contacts-invalid-msg__name");
+        form.insertBefore(invalidMsg, inputsContainer[1]);
+      }
+      result = false;
+    } else {
+      const invalidMsgOld = document.querySelector(
+        ".contacts-invalid-msg__name"
+      );
+      if (invalidMsgOld) {
+        form.removeChild(invalidMsgOld);
+      }
+      nameInput.classList.remove("invalid-name");
+    }
+
+    if (phoneInput.value.length < 17) {
+      const invalidMsgOld = document.querySelector(
+        ".contacts-invalid-msg__phone"
+      );
+      if (!invalidMsgOld) {
+        const invalidMsg = document.createElement("p");
+        phoneInput.classList.add("invalid-phone");
+        invalidMsg.innerHTML = "Некорректный номер";
+        invalidMsg.classList.add("contacts-invalid-msg__phone");
+        form.insertBefore(invalidMsg, inputsContainer[2]);
+      }
+      result = false;
+    } else {
+      const invalidMsgOld = document.querySelector(
+        ".contacts-invalid-msg__phone"
+      );
+      if (invalidMsgOld) {
+        form.removeChild(invalidMsgOld);
+      }
+      phoneInput.classList.remove("invalid-phone");
+    }
+    if (msgArea.value.length < 20) {
+      const invalidMsgOld = document.querySelector(
+        ".contacts-invalid-msg__msg"
+      );
+      if (!invalidMsgOld) {
+        const invalidMsg = document.createElement("p");
+        msgArea.classList.add("invalid-msg");
+        invalidMsg.innerHTML = "Минимум 20 символов";
+        invalidMsg.classList.add("contacts-invalid-msg__msg");
+        const contactsFormBtn = document.querySelector(".contacts-form__btn");
+        form.insertBefore(invalidMsg, contactsFormBtn);
+      }
+      result = false;
+    } else {
+      const invalidMsgOld = document.querySelector(".invalid-msg__phone");
+      if (invalidMsgOld) {
+        form.removeChild(invalidMsgOld);
+      }
+      msgArea.classList.remove("invalid-phone");
+    }
+
+    return result;
+  };
+
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (valid(this) === true) {
+      form.submit();
+    }
+  });
 };
 
 createBody();
 
-form('contacts');
+formFunction("contacts");
