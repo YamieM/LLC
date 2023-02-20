@@ -322,30 +322,38 @@ const createBody = () => {
       class="contacts-form__input"
     />
   </div>
-  <div class="contacts-form__input-container">
+  <div class="contacts-form__input-container-msg">
     <label for="contactsMsgInput" class="contacts-input-label">Сообщение </label>
     <textarea       
       id="contactsMsgInput"
-      title="Заполните поле"     
+      title="Заполните поле"  
+      resize = "none"  
       class="contacts-form__input"value=""></textarea>
   </div>
   <button class="contacts-form__btn" type="submit">ОТПРАВИТЬ СООБЩЕНИЕ</button>
 </form>`;
 
+  const inputs = document.querySelectorAll(".contacts-form__input");
   const inputsContainer = document.querySelectorAll(
     ".contacts-form__input-container"
   );
 
-  inputsContainer.forEach((el) => {
-    el.addEventListener("click", () => {
+  inputs.forEach((el) => {
+    el.addEventListener("focus", () => {
       el.classList.add("active");
+      el.parentElement.querySelector("label").classList.add("active");
+    });
+    el.addEventListener("blur", () => {
+      if (el.value.length < 1) {
+        el.classList.remove("active");
+        el.parentElement.querySelector("label").classList.remove("active");
+      }
     });
   });
-
   const form = document.forms.contactsForm;
   const element = form.elements.contactsPhoneInput;
 
-  element?.addEventListener("click", () => {
+  element?.addEventListener("focus", () => {
     element.focus();
     element.setSelectionRange(0, 0);
     element.value = "+7(";
@@ -385,7 +393,9 @@ const createBody = () => {
     }
 
     if (nameInput.value.length < 2) {
-      const invalidMsgOld = document.querySelector(".invalid-msg__name");
+      const invalidMsgOld = document.querySelector(
+        ".contacts-invalid-msg__name"
+      );
       if (!invalidMsgOld) {
         const invalidMsg = document.createElement("p");
         nameInput.classList.add("invalid-name");

@@ -1095,11 +1095,19 @@ export const formFunction = (page) => {
       parentElement: formContainer,
     });
 
+    const inputs = document.querySelectorAll(".form__input");
     const inputsContainer = document.querySelectorAll(".form__input-container");
-
-    inputsContainer.forEach((el) => {
-      el.addEventListener("click", () => {
+    const labels = document.querySelectorAll(".input-label");
+    inputs.forEach((el) => {
+      el.addEventListener("focus", () => {
         el.classList.add("active");
+        el.parentElement.querySelector("label").classList.add("active");
+      });
+      el.addEventListener("blur", () => {
+        if (el.value.length < 1) {
+          el.classList.remove("active");
+          el.parentElement.querySelector("label").classList.remove("active");
+        }
       });
     });
 
@@ -1111,7 +1119,7 @@ export const formFunction = (page) => {
     const form = document.forms.callForm;
     const element = form.elements.phoneInput;
 
-    element?.addEventListener("click", () => {
+    element?.addEventListener("focus", () => {
       element.focus();
       element.setSelectionRange(0, 0);
       element.value = "+7(";

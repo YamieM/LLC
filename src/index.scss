@@ -238,7 +238,7 @@ footer.disabled {
   @media (max-height: 790px) {
     margin-bottom: 30px;
   }
-  &:hover{
+  &:hover {
     color: $green;
     cursor: pointer;
   }
@@ -250,7 +250,7 @@ footer.disabled {
   margin-bottom: 20px;
   text-decoration: none;
   color: #333333;
-  &:hover{
+  &:hover {
     color: $blue;
   }
 }
@@ -264,7 +264,7 @@ footer.disabled {
   border-radius: 5px;
   font-style: "Roboto";
   margin-bottom: 54px;
-  &:hover{
+  &:hover {
     background-color: $lightBlue;
     cursor: pointer;
   }
@@ -798,6 +798,7 @@ footer.disabled {
   font-weight: 400;
   margin: 0 0 0 40px;
   color: #333333;
+  margin-top: 20px;
 }
 
 .traits-container-items__trait-ul {
@@ -1090,7 +1091,7 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 40px 0 0  0;
+  margin: 40px 0 0 0;
   width: 702px;
   height: 56px;
   font-family: "Roboto";
@@ -1103,7 +1104,7 @@ footer {
     font-size: 14px;
   }
 }
-.form__input-container:nth-child(1){
+.form__input-container:nth-child(1) {
   margin: 0 0 0 0;
 }
 .form__input-container.active > label {
@@ -1129,6 +1130,19 @@ footer {
     font-size: 14px;
   }
 }
+.form__input.active.invalid-name:focus {
+  outline: 1px solid rgb(175, 5, 5);
+}
+.form__input.active.invalid-phone:focus {
+  outline: 1px solid rgb(175, 5, 5);
+}
+
+.input-label.active {
+  transform: translateY(-30px);
+  background-color: white;
+  font-size: 14px;
+  color: #3c2a99;
+}
 
 .form__input.invalid-name {
   border: 1px solid rgb(175, 5, 5);
@@ -1139,13 +1153,13 @@ footer {
 
 .invalid-msg__name {
   font-size: 13px;
-  color: rgb(175, 5, 5);  
+  color: rgb(175, 5, 5);
   margin: 5px 0 0 10px;
 }
 
 .invalid-msg__phone {
   font-size: 13px;
-  color: rgb(175, 5, 5);  
+  color: rgb(175, 5, 5);
   margin: 5px 0 0 10px;
 }
 

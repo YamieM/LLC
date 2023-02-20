@@ -531,19 +531,34 @@ footer.disabled {
   }
 }
 
-.contacts-form__input-container > textarea {
-  height: 320px;
+.contacts-form__input-container-msg > textarea {
+  resize: none;
 }
 
-.contacts-form__input-container:nth-child(4) {
+.contacts-input-label.active {
+  transform: translateY(-30px);
+  background-color: white;
+  font-size: 14px;
+  color: #3c2a99;
+}
+
+.contacts-form__input-container-msg {
+  display: flex;
+  flex-direction: column;
+  margin: 40px 0 0 0;
+  max-width: 702px;
+  width: 100%;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 16px;
   justify-content: flex-start;
-  height: auto;
+  height: 320px;
 
   @media (max-width: $forTabletOnly) {
     height: 224px;
   }
 }
-.contacts-form__input-container:nth-child(4) > label {
+.contacts-form__input-container-msg > label {
   justify-self: flex-start;
   margin-top: 20px;
 }
@@ -575,7 +590,17 @@ footer.disabled {
   border: 1px solid rgb(175, 5, 5);
 }
 .contacts-form__input.invalid-msg {
-  border: 1px solid rgb(175, 5, 5);  
+  border: 1px solid rgb(175, 5, 5);
+}
+
+.contacts-form__input.active.invalid-name:focus {
+  outline: 1px solid rgb(175, 5, 5);
+}
+.contacts-form__input.active.invalid-phone:focus {
+  outline: 1px solid rgb(175, 5, 5);
+}
+.contacts-form__input.active.invalid-msg:focus {
+  outline: 1px solid rgb(175, 5, 5);
 }
 
 .contacts-invalid-msg__name {
