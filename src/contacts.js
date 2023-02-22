@@ -326,8 +326,7 @@ const createBody = () => {
     <label for="contactsMsgInput" class="contacts-input-label">Сообщение </label>
     <textarea       
       id="contactsMsgInput"
-      title="Заполните поле"  
-      resize = "none"  
+      title="Заполните поле"        
       class="contacts-form__input"value=""></textarea>
   </div>
   <button class="contacts-form__btn" type="submit">ОТПРАВИТЬ СООБЩЕНИЕ</button>

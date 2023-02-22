@@ -566,6 +566,8 @@ footer.disabled {
   font-size: 14px;
   bottom: -50%;
   transition: 0.3s linear;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .products-items__info {
@@ -602,6 +604,8 @@ footer.disabled {
     .products-items-info__button {
       bottom: 0%;
       cursor: pointer;
+      visibility: visible;
+      pointer-events: all;
     }
   }
 }
@@ -900,12 +904,23 @@ footer {
   height: 46px;
 
   @media (max-width: 1330px) {
-    margin-left: 40px;
   }
 
   @media (max-width: $forTabletOnly) {
+    grid-area: c;
+  }
+}
+
+.footer-container > a {
+  @media (max-width: $forTabletOnly) {
     grid-area: logo;
     margin-left: 20px;
+    width: 110px;
+    justify-self: center;
+  }
+
+  @media (max-width: 490px){
+    justify-self: flex-start;
   }
 }
 
@@ -915,26 +930,40 @@ footer {
   width: auto;
 
   @media (max-width: $forTabletOnly) {
+    position: absolute;
     grid-area: c;
+    justify-self: center;
+    align-self: flex-end;
+    margin-bottom: 15px;
+  }
+
+  @media (max-width: $forMobileOnly) {
+    position: static;
+    justify-self: flex-start;
   }
 }
 
 .footer-container__text-area2 {
   display: flex;
   flex-direction: column;
-  width: auto;
+  width: 100%;
   max-width: 170px;
 
   @media (max-width: 1330px) {
     max-width: 130px;
+    justify-self: center;
   }
 
   @media (max-width: $forTabletOnly) {
     grid-area: adr;
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
     margin-left: 20px;
-    max-width: none;
+    max-width: 340px;
+  }
+
+  @media (max-width: 490px) {
+    justify-self: flex-start;
   }
 }
 
@@ -1122,6 +1151,7 @@ footer {
   font-family: "Roboto";
   font-weight: 400;
   font-size: 16px;
+  padding: 10px;
   &:focus {
     outline: 1px solid#3c2a99;
   }
